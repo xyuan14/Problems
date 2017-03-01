@@ -14,10 +14,12 @@ Problems and solutions
 >return [0, 1].
 
 #Soluiton: 
-1. Naive Version
+1. Naive Version 
+
   Two loops, the first one loop throw the list and the second loop check for each value whether it's proper. 
   Time complexity: O(n2)
 2. HashMap 
+
   build a hashmap (K:value,V:index), for each element, check whether the index is target-i. If it is, get the corresponding value.
   Time complexity: (n)
 3. Hints:
@@ -27,7 +29,7 @@ Problems and solutions
     because we need two elements and these two are all equals. So if: a+b = target, and b haven't been stored in the hashmap, a will be stored in the hashmap. When loop to b, b will find a, and get the target. So there is no need to store the data in advanced. 
   
   ```
-    public class Solution {
+public class Solution {
         public int[] twoSum(int[] nums, int target) {
             if(nums.length == 0){
                 return null;
@@ -49,4 +51,59 @@ Problems and solutions
     }
     ```
     
+## Add Two Numbers
+#Question:
+
+>You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of >their nodes contain a single digit. Add the two numbers and return it as a linked list.
+>
+>You may assume the two numbers do not contain any leading zero, except the number 0 itself.》
+>Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+>Output: 7 -> 0 -> 8
+>
+>Subscribe to see which companies asked this question.
+
+#Solution
+1. Add two nodes' elements one by one. Be careful about the carry.
+    Time Complexity: (n)(n is the length of the longer linked list.)
+2. Tips:
+    1. There are two possible ways to deal with the "adding procedure" after getting the result:
+        1. current.val = value -> create new next node ->current.next = next -> current = current.next
+        2. create the next node -> next.val = value -> current.next = next -> current = current.next
+        In the first condition, the current points to an empty node in the end, and in the second condition the current points to the end of the linkedlist. So we should use the second way because it's too complex to set the final current pointer as null
+        2. How to get the value of setting value and carry value
+        Instead of creating new variables and set/ get mode, we can get value like this: (carry+val1+val2)%10, and get carry like this: (carry+val1+val2)/10 
+        3. Be careful about the last digit: if carry is 1 in the end, we should create a new node
+        
+#Code: 
+```
+        public class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        if(l1 == null){return l2;}
+        if(l2 == null){return l1;}
+        int carry = 0;
+        ListNode head = new ListNode(0);
+        ListNode p1 = l1;
+        ListNode p2 = l2;
+        ListNode cursor = head;
+        while(p1!=null || p2 != null){
+            int val1,val2;
+            if(p1 == null){val1 = 0;}
+            else {val1 = p1.val;p1 = p1.next;}
+            if(p2 == null){val2 = 0;}
+            else {val2 = p2.val;p2 = p2.next;}
+            ListNode node = new ListNode((carry+val1+val2)%10);
+            carry = (carry+val1+val2)/10;
+            cursor.next = node;
+            cursor = cursor.next;
+        }
+        
+        if(carry != 0){
+            ListNode node = new ListNode(1);
+            cursor.next = node;
+        }
+        head = head.next;
+        return head;
+    }
+}
+```     
     
