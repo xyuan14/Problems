@@ -119,14 +119,15 @@ public class Solution {
 >Given "bbbbb", the answer is "b", with the length of 1.
 >
 >Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
-    #Solutions
-    1. Algorithm: two pointers(i, label), label labels the last un-repeated position. If current substring(label, s[i-1]) contains s[i], move label to the s[r+1] (r is the index of the repeat character s[i])
-    2. Time Complexity : O(n)
-    3. Solution: 
-        1. naive solution: 
-        two labels, first labels, second loop
-        2. updated version:
-        build a hashmap to store the current character and its last appeared position. Once s[i] repeats, update the position and second label's value. 
+#Solutions
+1. Algorithm: two pointers(i, label), label labels the last un-repeated position. If current substring(label, s[i-1]) contains s[i], move label to the s[r+1] (r is the index of the repeat character s[i])
+2. Time Complexity : O(n)
+3. Solution: 
+    1. naive solution: 
+    two labels, first labels, second loop
+    2. updated version:
+    build a hashmap to store the current character and its last appeared position. Once s[i] repeats, update the position and second label's value. 
+    
 #Code:
     Naive Version
 ```
@@ -178,6 +179,7 @@ public class Solution {
 ```
 
 HashMap:
+
 ```
 public class Solution {
     public int lengthOfLongestSubstring(String s) {
@@ -196,8 +198,8 @@ public class Solution {
             return max;
         }
 }
-
 ```
+
 Tips:
     1. Why use hashmap?
     could save time(O(1) for getting last repeated index)
