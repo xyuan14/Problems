@@ -27,8 +27,9 @@ Problems and solutions
      Algorithm: find the first element(get the value, index) -> find the second element(get the value,index), and check whether the element is the target. A loop takes O(n) to get the value and index, while a hashmap takes O(1) to get these two values.
   2. Why not store the value in advanced?
     because we need two elements and these two are all equals. So if: a+b = target, and b haven't been stored in the hashmap, a will be stored in the hashmap. When loop to b, b will find a, and get the target. So there is no need to store the data in advanced. 
-  
-  ```
+
+#Code
+  ```
 public class Solution {
         public int[] twoSum(int[] nums, int target) {
             if(nums.length == 0){
@@ -51,7 +52,7 @@ public class Solution {
     }
     ```
     
-## Add Two Numbers
+## 2.Add Two Numbers
 #Question:
 
 >You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of >their nodes contain a single digit. Add the two numbers and return it as a linked list.
@@ -106,4 +107,100 @@ public class Solution {
     }
 }
 ```     
+## 3.Longest SubString Without Repeating Characters
+
+#Question
+>Given a string, find the length of the longest substring without repeating characters.
+>
+>Examples:
+>C
+>Given "abcabcbb", the answer is "abc", which the length is 3.
+>
+>Given "bbbbb", the answer is "b", with the length of 1.
+>
+>Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
+    #Solutions
+    1. Algorithm: two pointers(i, label), label labels the last un-repeated position. If current substring(label, s[i-1]) contains s[i], move label to the s[r+1] (r is the index of the repeat character s[i])
+    2. Time Complexity : O(n)
+    3. Solution: 
+        1. naive solution: 
+        two labels, first labels, second loop
+        2. updated version:
+        build a hashmap to store the current character and its last appeared position. Once s[i] repeats, update the position and second label's value. 
+#Code:
+    Naive Version
+```
+    public class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        if(s == null || s.equals("")){
+            return 0;
+        }
+        else{
+            int max = 1;
+            int start = 0;
+            int current = 0; 
+            char[] chArr = s.toCharArray();
+            for(int i = 0;i<s.length();i++){
+                int repeatIndex = checkIndex(chArr,start,i-1,chArr[i]);
+                if( repeatIndex == -1){
+                    current++;
+                }
+                else{
+                    start = repeatIndex+1;
+                    if(current>max){
+                        max = current;
+                    }
+                    current = i-start+1;
+                }
+            }
+             if(current>max){
+                max = current;
+            }
+            return max;
+        }
+    }
+    
+    public int checkIndex(char[] charr,int start, int end,char target){
+        if(start <= end){
+            for(int i = start;i<=end;i++){
+            if(charr[i] == target){
+                return i;
+            }
+        }
+        return -1;
+        }
+        else{
+            return -1;
+        }
+        
+    }
+}
+```
+
+HashMap:
+```
+public class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        if(s == null || s.length() == 0){ return 0; }
+            HashMap<Character, Integer> map = new HashMap<Character,Integer>();
+            int label = 0;
+            int max = 1;
+            for(int i = 0;i<s.length();i++){
+                char ch = s.charAt(i);
+                if(map.containsKey(ch) && label < (map.get(ch)+1)){
+                    label = Math.max(label,map.get(ch)+1);
+                }
+                map.put(ch,i);
+                max = Math.max(max,i-label+1);
+            }
+            return max;
+        }
+}
+
+```
+Tips:
+    1. Why use hashmap?
+    could save time(O(1) for getting last repeated index)
+    2. why label = Math.max(label,map.get(ch)+1)?
+    because the label should only move forward(last index of current character may appear before label, which is not what we want)
     
