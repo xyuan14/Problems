@@ -200,9 +200,68 @@ public class Solution {
 }
 ```
 
-Tips:
+#Tips:
     1. Why use hashmap?
     could save time(O(1) for getting last repeated index)
     2. why label = Math.max(label,map.get(ch)+1)?
     because the label should only move forward(last index of current character may appear before label, which is not what we want)
     
+##5. Longest palindromic subString
+
+#Question
+>Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
+>
+>Example:
+>
+>Input: "babad"
+>
+>Output: "bab"
+>
+>Note: "aba" is also a valid answer.
+>Example:
+>
+>Input: "cbbd"
+>
+>Output: "bb"
+
+#Solution:
+1. For each character, check whether it is a center of palindromic subString.
+    1. For character, there are two conditions: 
+       1. length is odd: for character i, check i+counter-1, i-counter+1 (counter starts from 0)
+       2. length is even: for character i, check i-counter, i+counter+1 (counter starts from 0)
+    2. Time complexity: O(n2)
+    
+#Code
+```
+public String longestPalindrome(String s) {
+            int max =1;
+            int start = 0;
+            int end = 1;
+            for(int i  =0;i<s.length();i++){
+                int counterOdd = 0;
+                while((i-counterOdd-1)>=0 && (i+counterOdd+1)<=(s.length()-1) && (s.charAt(i-counterOdd-1) == s.charAt(i+counterOdd+1))){
+                        counterOdd++;
+                }
+                if((2*counterOdd+1) > max){
+                    max = 2*counterOdd+1;
+                    start = i-counterOdd;
+                    end = i+counterOdd+1;
+                }
+                int counterEven = 0;
+                while(i-counterEven >=0 && i+counterEven+1<=s.length()-1 && (s.charAt(i-counterEven) == s.charAt(i+counterEven+1))){
+                    counterEven++;
+                }
+                if((2*counterEven) > max){
+                    max = 2*counterEven;
+                    start = i-counterEven+1 ;
+                    end = i+counterEven+1;
+                }
+                
+            }
+        return s.substring(start,end);
+    }
+```
+
+#Tips:
+1. Very care about the boundaries: see https://wordpress.com/post/xyuan14.wordpress.com/120
+2. the while loop should check the updated statues of variables, but in this condition I mixed with the if condition (no proper way to to break out for nested loop, try to avoid this condition in the future. )
