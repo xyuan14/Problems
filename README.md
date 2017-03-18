@@ -109,7 +109,7 @@ public class Solution {
 ```     
 ## 3.Longest SubString Without Repeating Characters
 
-#Question
+# Question
 >Given a string, find the length of the longest substring without repeating characters.
 >
 >Examples:
@@ -119,7 +119,7 @@ public class Solution {
 >Given "bbbbb", the answer is "b", with the length of 1.
 >
 >Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
-#Solutions
+# Solutions
 1. Algorithm: two pointers(i, label), label labels the last un-repeated position. If current substring(label, s[i-1]) contains s[i], move label to the s[r+1] (r is the index of the repeat character s[i])
 2. Time Complexity : O(n)
 3. Solution: 
@@ -128,7 +128,7 @@ public class Solution {
     2. updated version:
     build a hashmap to store the current character and its last appeared position. Once s[i] repeats, update the position and second label's value. 
     
-#Code:
+# Code:
     Naive Version
 ```
     public class Solution {
@@ -200,15 +200,15 @@ public class Solution {
 }
 ```
 
-#Tips:
+# Tips:
     1. Why use hashmap?
     could save time(O(1) for getting last repeated index)
     2. why label = Math.max(label,map.get(ch)+1)?
     because the label should only move forward(last index of current character may appear before label, which is not what we want)
     
-##5. Longest palindromic subString
+## 5. Longest palindromic subString
 
-#Question
+# Question
 >Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
 >
 >Example:
@@ -224,14 +224,14 @@ public class Solution {
 >
 >Output: "bb"
 
-#Solution:
+# Solution:
 1. For each character, check whether it is a center of palindromic subString.
     1. For character, there are two conditions: 
        1. length is odd: for character i, check i+counter-1, i-counter+1 (counter starts from 0)
        2. length is even: for character i, check i-counter, i+counter+1 (counter starts from 0)
     2. Time complexity: O(n2)
     
-#Code
+# Code
 ```
 public String longestPalindrome(String s) {
             int max =1;
@@ -265,3 +265,45 @@ public String longestPalindrome(String s) {
 #Tips:
 1. Very care about the boundaries: see https://wordpress.com/post/xyuan14.wordpress.com/120
 2. the while loop should check the updated statues of variables, but in this condition I mixed with the if condition (no proper way to to break out for nested loop, try to avoid this condition in the future. )
+
+## 9. Palindrome number
+
+# Question
+
+>Determine whether an integer is a palindrome. Do this without extra space.
+
+# Solution:
+    1.reverse integer, compare
+    Time Complexity O(n)
+    Space Complexity O(n)
+
+# Code
+
+```
+public class Solution {
+    public boolean isPalindrome(int x) {
+        if(x < 0){return false;}
+        else if(x <10) {return true;}
+        else{
+            int rev = 0;
+            int y = x;
+            while( x > 0 ){
+                if(rev > Integer.MAX_VALUE/10){
+                    return false;
+                }
+                else{
+                    rev = rev*10 + x%10;
+                    x = x/10;
+                }
+            }
+            if (rev == y){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    }
+}
+
+```
