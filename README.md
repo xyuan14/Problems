@@ -1,11 +1,11 @@
 # Problems
 Problems and solutions
 
-##1. Two sums
+## 1. Two sums
 
     https://leetcode.com/problems/two-sum/?tab=Description
 
-#Question: 
+# Question: 
 > Given an array of integers, return indices of the two numbers such that they add up to a specific target.
 >You may assume that each input would have exactly one solution, and you may not use the same element twice.
 >Example:
@@ -13,7 +13,7 @@ Problems and solutions
 >Because nums[0] + nums[1] = 2 + 7 = 9,
 >return [0, 1].
 
-#Soluiton: 
+# Soluiton: 
 1. Naive Version 
 
   Two loops, the first one loop throw the list and the second loop check for each value whether it's proper. 
@@ -28,7 +28,7 @@ Problems and solutions
   2. Why not store the value in advanced?
     because we need two elements and these two are all equals. So if: a+b = target, and b haven't been stored in the hashmap, a will be stored in the hashmap. When loop to b, b will find a, and get the target. So there is no need to store the data in advanced. 
 
-#Code
+# Code
   ```
 public class Solution {
         public int[] twoSum(int[] nums, int target) {
@@ -53,7 +53,7 @@ public class Solution {
     ```
     
 ## 2.Add Two Numbers
-#Question:
+# Question:
 
 >You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of >their nodes contain a single digit. Add the two numbers and return it as a linked list.
 >
@@ -63,7 +63,7 @@ public class Solution {
 >
 >Subscribe to see which companies asked this question.
 
-#Solution
+# Solution
 1. Add two nodes' elements one by one. Be careful about the carry.
     Time Complexity: (n)(n is the length of the longer linked list.)
 2. Tips:
@@ -75,7 +75,7 @@ public class Solution {
         Instead of creating new variables and set/ get mode, we can get value like this: (carry+val1+val2)%10, and get carry like this: (carry+val1+val2)/10 
         3. Be careful about the last digit: if carry is 1 in the end, we should create a new node
         
-#Code: 
+# Code: 
 ```
         public class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
@@ -273,12 +273,14 @@ public String longestPalindrome(String s) {
 >Determine whether an integer is a palindrome. Do this without extra space.
 
 # Solution:
-    1.reverse integer, compare
+    1.Naive Solution: reverse integer, compare
     Time Complexity O(n)
     Space Complexity O(n)
+    2. Compare the first half part and last half part: x>rev
 
 # Code
 
+Naive Solution:
 ```
 public class Solution {
     public boolean isPalindrome(int x) {
@@ -307,3 +309,20 @@ public class Solution {
 }
 
 ```
+
+Better Solution:
+```
+public class Solution {
+    public boolean isPalindrome(int x) {
+       if(x<0 || (x!=0 && x%10==0)){return false;}
+       int rev = 0;
+       while(x > rev){
+           rev = rev*10 + x%10;
+           x = x / 10;
+       }
+       return (rev == x || rev/10 == x);
+    }
+}
+```
+# Tips:
+1. try to get the highest digit of a number but cannot -- acutally no need to get the digit one by one, but we can get the first half of the number
