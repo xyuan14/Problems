@@ -326,3 +326,64 @@ public class Solution {
 ```
 # Tips:
 1. try to get the highest digit of a number but cannot -- acutally no need to get the digit one by one, but we can get the first half of the number
+
+## 303 Range Sum Query
+
+>Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
+>
+>Given nums = [-2, 0, 3, -5, 2, -1]
+>
+>sumRange(0, 2) -> 1
+>sumRange(2, 5) -> -1
+>sumRange(0, 5) -> -3
+>
+
+>You may assume that the array does not change.
+>There are many calls to sumRange function.
+
+# Solution:
+    1. Naive: for each query, sum from nums[i] to nums[j]
+        1.1 init complexity: O(1)
+        1.2 query complexity: O(n)
+    2. improved: initiate for pre sum, for query, result = nums[j] - nums[i-1]
+        2.1 init complexity: O(n)
+        2.2 query complexity: O(1)
+# Code
+
+```
+
+public class NumArray {
+    
+    private int[] sums;
+    
+    public NumArray(int[] nums) {
+        sums = new int[nums.length];
+        if(nums.length!=1){
+            for(int f = 1;f < sums.length;f++){
+                nums[f]+=nums[f-1];
+            }
+        }
+            sums = nums;
+    }
+    
+    public int sumRange(int i, int j) {
+        if(i ==0){
+            return sums[j];
+        }
+        else{
+            return sums[j] - sums[i-1];
+        }
+    }
+}
+
+/**
+ * Your NumArray object will be instantiated and called as such:
+ * NumArray obj = new NumArray(nums);
+ * int param_1 = obj.sumRange(i,j);
+ */
+```
+
+
+# Tips:
+1. for these problems (range problem), it's very common to use pre sum.
+2. For the trade off - higher complexity for once is much better than for many times.
