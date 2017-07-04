@@ -327,6 +327,89 @@ public class Solution {
 # Tips:
 1. try to get the highest digit of a number but cannot -- acutally no need to get the digit one by one, but we can get the first half of the number
 
+## 78 subsets
+
+>Given a set of distinct integers, nums, return all possible subsets.
+>
+>Note: The solution set must not contain duplicate subsets.
+>
+>For example,
+>If nums = [1,2,3], a solution is:
+>
+>[
+>  [3],
+>  [1],
+>  [2],
+>  [1,2,3],
+>  [1,3],
+>  [2,3],
+>  [1,2],
+>  []
+>]
+
+# Solution
+
+
+
+## 153 Find minimum in rotated sorted Array
+
+>Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
+>
+>(i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
+>
+>Find the minimum element.
+>
+>You may assume no duplicate exists in the array.
+>
+
+# Solution:
+    1. Naive: 
+        1.1 for 4,5,6,7,0,1,2, set pivot as most right
+        1.2 from left, in first half part, all elements should be larger than the most right
+        1.3 so find the first element that is less than right by using binary search.
+        1.4 the minimun should be between this pointer and the last pointer
+        1.5 use binary search to find this element.
+    2. Improved
+    3. JiuZhang
+    
+# Code
+
+```
+public int findMin(int[] nums) {
+        if(nums==null || nums.length==0){return -1;}
+        if(nums.length==1) {return nums[0];}
+        if(nums.length==2) {return Math.min(nums[0],nums[1]);}
+        /*Naive Version*/
+        /*
+          for 4,5,6,7,0,1,2, set pivot as most right
+          from left, in first half part, all elements should be larger than the most right
+          so find the first element that is less than right by using binary search.
+          the minimun should be between this pointer and the last pointer
+        */
+        
+        int start = 0,end = nums.length-1,pivot = nums.length-1;
+        while(start +1 < end){
+            int mid = start + (end-start)/2;
+            if(nums[mid]<nums[mid-1]){
+                return nums[mid];
+            }
+            else if (nums[mid] < nums[pivot]){
+                end = mid;
+            }
+            else{
+                start = mid;
+            }
+        }
+        
+        return Math.min(nums[start],nums[end]);
+    }
+
+```
+
+# Tips:
+
+
+
 ## 303 Range Sum Query
 
 >Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
@@ -337,7 +420,7 @@ public class Solution {
 >sumRange(2, 5) -> -1
 >sumRange(0, 5) -> -3
 >
-
+>
 >You may assume that the array does not change.
 >There are many calls to sumRange function.
 
