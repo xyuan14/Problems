@@ -327,7 +327,8 @@ public class Solution {
 # Tips:
 1. try to get the highest digit of a number but cannot -- acutally no need to get the digit one by one, but we can get the first half of the number
 
-## 78 subsets
+## 78 subsets  :shipit:
+
 
 >Given a set of distinct integers, nums, return all possible subsets.
 >
@@ -351,7 +352,7 @@ public class Solution {
 
 
 
-## 153 Find minimum in rotated sorted Array
+## 153 Find minimum in rotated sorted Array  :shipit:
 
 >Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
 >
@@ -408,7 +409,74 @@ public int findMin(int[] nums) {
 
 # Tips:
 
+## 239 Sliding Window Maximum
 
+>Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only >see the k numbers in the window. Each time the sliding window moves right by one position.
+>
+>For example,
+>Given nums = [1,3,-1,-3,5,3,6,7], and k = 3.
+>
+>Window position                Max
+>---------------               -----
+>[1  3  -1] -3  5  3  6  7       3
+> 1 [3  -1  -3] 5  3  6  7       3
+> 1  3 [-1  -3  5] 3  6  7       5
+> 1  3  -1 [-3  5  3] 6  7       5
+> 1  3  -1  -3 [5  3  6] 7       6
+> 1  3  -1  -3  5 [3  6  7]      7
+>Therefore, return the max sliding window as [3,3,5,5,6,7].
+
+# Hints
+    1. How about using a data structure such as deque (double-ended queue)?
+    2. The queue size need not be the same as the window’s size.
+    3. Remove redundant elements and the queue should store only elements that need to be considered.
+
+# Solution: 
+    1. Data structure: 
+        1.1 keep a monotonic decreasing deque(double-ended queue) to store the window (index)
+        1.2 an array to store the data
+    2. Analysis: 
+        2.1 keep a monotonic decreasing deque to store the window(index). all elements in the deque is the candidate for the largest element, and the head (left most) value is the current max value.
+        2.2 dequeue all the elements which are less than nums[i]. if the element in the deque is less than the nums[i], that means this element has no chance to be the max value any more: this element will always be polled earlier than nums[i], if stays the same window with nums[i], nums[i] is larger.
+        2.3 the head of the deque is the result
+    3. Algorithm: loop the array
+        3.1 for each slide, check whether the head is less than i-k+1. if so, remove the head.(this element is no longer in the window)
+        3.2 dequeue all the elements which are less than nums[i]. enqueue the new element(nums[i]) to the list. 
+        3.3 put the head of the deque to the result[i-k+1];
+
+# Code: 
+```
+public class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        if(nums == null || nums.length == 0) {return new int[0];}
+        int[] results = new int[nums.length-k+1];
+        LinkedList<Integer> deque = new LinkedList<Integer>();
+        
+        for(int i = 0 ;i<nums.length;i++){
+            // check whether the head is not in the slide
+            if(!deque.isEmpty() && deque.peekFirst() == i-k){
+                deque.pollFirst();
+            }
+            // poll all elements less than nums[i]
+            while(!deque.isEmpty() && nums[deque.peekLast()] < nums[i]){
+                deque.pollLast();
+            }
+            // enque the i
+            deque.offer(i);
+            //put the head to the results.
+            if(i >= k-1){
+                results[i-k+1] = nums[deque.peekFirst()];
+            }
+        }
+        return results;
+    }
+}
+
+```
+
+# Tips:
+    1. deque to deal with the head
+    2. use monotonic stack to store all candidates. 
 
 ## 303 Range Sum Query
 
