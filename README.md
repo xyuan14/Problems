@@ -29,7 +29,7 @@ Problems and solutions
     because we need two elements and these two are all equals. So if: a+b = target, and b haven't been stored in the hashmap, a will be stored in the hashmap. When loop to b, b will find a, and get the target. So there is no need to store the data in advanced. 
 
 # Code
-  ```
+```
 public class Solution {
         public int[] twoSum(int[] nums, int target) {
             if(nums.length == 0){
@@ -50,7 +50,7 @@ public class Solution {
             }
         }
     }
-    ```
+```
     
 ## 2.Add Two Numbers
 # Question:
