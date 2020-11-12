@@ -13,7 +13,12 @@ while p1 or p2:
   if p2: 
     # operate p2
     p2 = p2.next
-
 ```
+Tips: 
+1.  p1 or p2. if p2 not None, operate, otherwise ignore.
 
-
+2. create dummy node: 
+```
+  dummy = ListNode()
+  p = dummy
+```
