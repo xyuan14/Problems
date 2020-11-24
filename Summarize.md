@@ -55,8 +55,13 @@ like 1 to 4: 4 - 1 + 1 = 4, [8, 10, 7, 11]
 ## Subset/Permutation/Combination 
 
 Template
+```
 
-### subset: 
+
+```
+
+
+### subset I//II: 
 
 Solution: 
 
@@ -68,6 +73,12 @@ for subset, each item = [added items] + [i]] + (subsets from i+1 to len(nums)-1)
 
 
 ![image info](resources/images/subsets.png)
+
+With duplicate: 
+1 | 2 | 2 | 
+|---|---|----|
+| 0 | 1 |  2 |
+
 
 code:
 ```
