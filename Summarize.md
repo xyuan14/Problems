@@ -48,3 +48,38 @@ i to j: j - i + 1
 like 1 to 4: 4 - 1 + 1 = 4, [8, 10, 7, 11]
 
 3. use map to store visited index so could get the previous index within O(1) time
+
+
+# BackTrack Problems:
+
+## Subset/Permutation/Combination 
+
+Template
+
+### subset: 
+
+Solution: 
+
+for subset, each item = [added items] + [i]] + (subsets from i+1 to len(nums)-1)
+
+
+![image info](resources/images/subsets.png)
+
+code:
+```
+def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        result = []
+        nums.sort()
+        def dfs(start: int, tempList:List[int]):
+            result.append(list(tempList))
+            for i in range(start, len(nums)):
+                # this line is for subset II: remove duplicate elements
+                if i != start and nums[i] == nums[i-1]:
+                    continue
+                tempList.append(nums[i])
+                dfs(i+1, tempList)
+                del tempList[-1]
+        dfs(0, [])
+        return result
+
+```
