@@ -62,6 +62,10 @@ Solution:
 
 for subset, each item = [added items] + [i]] + (subsets from i+1 to len(nums)-1)
 
+ 1 | 2 | 3 | 4 | 
+|---|---|----|---|
+| 0 | 1 |  2 | 3 |
+
 
 ![image info](resources/images/subsets.png)
 
