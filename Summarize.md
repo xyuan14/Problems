@@ -56,7 +56,13 @@ like 1 to 4: 4 - 1 + 1 = 4, [8, 10, 7, 11]
 
 Template
 ```
-
+def dfs(start: int, tempList: List[int])
+  # add result
+  # 1. for subset, add every times
+  # 2. for permutation, add when len(tempList) == len(nums)
+  # 3. add copy
+  result.append(list(tempList))
+  
 
 ```
 
@@ -78,6 +84,18 @@ With duplicate:
 1 | 2 | 2 | 
 |---|---|----|
 | 0 | 1 |  2 |
+
+![image info](resources/images/subsets_duplicate.png)
+
+
+resolve: 
+1. get existing items --> start
+2. loop i for current level --> i, tempList.add(nums[i]) del tempList[-1]
+3. go to next level --> dfs(**i+1**, tempList)
+
+When duplicate: 
+1. Should remove duplicate when looping **current level**
+2. Should not remove duplicate when go to **next level** 
 
 
 code:
